@@ -72,4 +72,5 @@ volumes:
     sonarqube_conf: {}
     sonarqube_data: {}
     sonarqube_plugins: {}
+    sonarqube_extension: {}
     postgre_conf: {}
