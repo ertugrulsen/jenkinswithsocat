@@ -26,19 +26,6 @@ services:
 			- /var/run/docker.sock:/var/run/docker.sock
 		expose:
 			- "2375"
-    sonarqube:
-        image: sonarqube:community
-        container_name: sonarqube
-        restart: always
-        ports:
-             - "9000:9000"
-        networks:
-             - golden_gate
-        volumes:
-             - sonarqube_conf:/opt/sonarqube/conf
-             - sonarqube_data:/opt/sonarqube/data
-             - sonarqube_extension:/opt/sonarqube/extensions
-             - sonarqube_plugins:/opt/sonarqube/lib/bundled-plugins
 networks:
 	ask_network:
 		driver: bridge
