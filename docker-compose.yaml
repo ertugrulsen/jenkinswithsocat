@@ -2,7 +2,7 @@ version: "3.3"
 
 services:
     jenkins:
-        image: jenkins/jenkins
+        image: jenkinsci/jenkins
         container_name: jenkins
         restart: always
         privileged: true
@@ -10,7 +10,7 @@ services:
             - "8080:8080"
             - "50000:50000"
         networks:
-            - ask_network
+            - golden_gate
         volumes:
             - jenkins_data:/var/jenkins_home
             - /var/run/docker.sock:/var/run/docker.sock
@@ -19,35 +19,16 @@ services:
         image: alpine/socat:latest
         container_name: alpine-socat
         restart: always
-        command: tcp-listen:2375, fork,reuseaddr unix-connect:/var/run/docker.sock
+        command: tcp-listen:2375,fork,reuseaddr unix-connect:/var/run/docker.sock
         networks:
-            - ask_network
+            - golden_gate
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
         expose:
             - "2375"
-    sonarqube:
-        image: sonarqube:community
-        container_name: sonarqube
-        restart: always
-        ports:
-             - "9000:9000"
-        networks:
-             - ask_network
-        volumes:
-             - sonarqube_conf:/opt/sonarqube/conf
-             - sonarqube_data:/opt/sonarqube/data
-             - sonarqube_extension:/opt/sonarqube/extensions
-             - sonarqube_plugins:/opt/sonarqube/lib/bundled-plugins
 networks:
-    ask_network:
+    golden_gate:
         driver: bridge
 volumes:
     jenkins_data: {}
     docker_certs: {}
-    sonarqube_conf: {}
-    sonarqube_data: {}
-    sonarqube_extension: {}
-    sonarqube_plugins: {}
-    
-    
