@@ -47,6 +47,7 @@ services:
              - sonardb
         links:
              - sonardb
+    sonardb:
         image: postgres
         container_name: postgres
         restart: always
