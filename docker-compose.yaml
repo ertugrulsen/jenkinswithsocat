@@ -1,31 +1,31 @@
 version: "3.3"
 
 services:
-	jenkins:
-		image: jenkinsci/jenkins
-		container_name: jenkins
-		restart: always
-		privileged: true
-		ports:
-			- "8080:8080"
-			- "50000:50000"
-		networks:
-			- ask_network
-		volumes:
-			- jenkins_data:/var/jenkins_home
-			- /var/run/docker.sock:/var/run/docker.sock
-			- docker_certs:/certs/client:ro
-	socat:
-		image: alpine/socat:latest
-		container_name: alpine-socat
-		restart: always
-		command: tcp-listen:2375, fork,reuseaddr unix-connect:/var/run/docker.sock
-		networks:
-			- ask_network
-		volumes:
-			- /var/run/docker.sock:/var/run/docker.sock
-		expose:
-			- "2375"
+    jenkins:
+        image: jenkinsci/jenkins
+        container_name: jenkins
+        restart: always
+        privileged: true
+        ports:
+            - "8080:8080"
+            - "50000:50000"
+        networks:
+            - ask_network
+        volumes:
+            - jenkins_data:/var/jenkins_home
+            - /var/run/docker.sock:/var/run/docker.sock
+            - docker_certs:/certs/client:ro
+    socat:
+        image: alpine/socat:latest
+        container_name: alpine-socat
+        restart: always
+        command: tcp-listen:2375, fork,reuseaddr unix-connect:/var/run/docker.sock
+        networks:
+            - ask_network
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+        expose:
+            - "2375"
     sonarqube:
         image: sonarqube:community
         container_name: sonarqube
@@ -40,8 +40,14 @@ services:
              - sonarqube_extension:/opt/sonarqube/extensions
              - sonarqube_plugins:/opt/sonarqube/lib/bundled-plugins
 networks:
-	ask_network:
-		driver: bridge
+    ask_network:
+        driver: bridge
 volumes:
-	jenkins_data: {}
-	docker_certs: {}
+    jenkins_data: {}
+    docker_certs: {}
+    sonarqube_conf: {}
+    sonarqube_data: {}
+    sonarqube_extension: {}
+    sonarqube_plugins: {}
+    
+    
